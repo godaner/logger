@@ -1,10 +1,10 @@
 package logger
 
-//定义接口
+//define interface
 type Logger interface {
-	Debug(string,...interface{})
-	Info(string,...interface{})
-	Warn(string,...interface{})
-	Error(string,...interface{})
-	Panic(string,...interface{})
+	Debug(string, ...interface{})
+	Info(string, ...interface{})
+	Warn(string, ...interface{})
+	Error(string, ...interface{})
+	Panic(string, ...interface{})
 }
