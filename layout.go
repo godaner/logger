@@ -7,12 +7,17 @@ import (
 	"github.com/pkg/errors"
 	"go-util"
 	"time"
+	"runtime"
+	"fmt"
 )
 const (
 	k_time="time"
 	k_level="level"
 	k_id="id"
 	k_message="message"
+	k_file="file"
+	k_function="function"
+	k_linenum="linenum"
 )
 
 type Layout struct {
@@ -20,6 +25,9 @@ type Layout struct {
 	timeFormat string
 	level bool
 	id bool
+	file bool
+	function bool
+	lineNum bool
 }
 
 
@@ -29,6 +37,9 @@ func NewLayout(layoutString string) (*Layout,error){
 	l_timeFormat:=""
 	l_level:=false
 	l_id:=false
+	l_function:=false
+	l_file:=false
+	l_linenum:=false
 
 	if !strings.Contains(layoutString,k_message) {
 		return nil,errors.New("${message} is not exits")
@@ -55,6 +66,12 @@ func NewLayout(layoutString string) (*Layout,error){
 			l_level=true
 		case k_time:
 			l_timeFormat=v
+		case k_file:
+			l_file=true
+		case k_function:
+			l_function=true
+		case k_linenum:
+			l_linenum=true
 		}
 	}
 
@@ -63,11 +80,29 @@ func NewLayout(layoutString string) (*Layout,error){
 		timeFormat:l_timeFormat,
 		id:l_id,
 		level:l_level,
+		file:l_file,
+		function:l_function,
+		lineNum:l_linenum,
 	},nil
 }
 func (this *Layout) printf(currtLevel Level, format string, content ...interface{}) (int, error) {
 
 	f:=this.layout
+
+	pc,file,line,_ := runtime.Caller(2)
+	ff := runtime.FuncForPC(pc)
+	//file
+	if this.file {
+		f=strings.Replace(f,"${"+k_file+"}",file,-1)
+	}
+	//function
+	if this.function {
+		f=strings.Replace(f,"${"+k_function+"}",ff.Name(),-1)
+	}
+	//linenum
+	if this.lineNum {
+		f=strings.Replace(f,"${"+k_linenum+"}",fmt.Sprintf("%d",line),-1)
+	}
 	//message
 	f=strings.Replace(f,"${"+k_message+"}",format,-1)
 	//level

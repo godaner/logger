@@ -23,7 +23,7 @@ type Log struct {
 
 func NewLog(layoutString string, lowestVisibleLevel Level) (*Log,error) {
 	if layoutString == "" {
-		layoutString = "${time:2006-01-02 15:04:05.000} > ${level} ${id} ${message}"
+		layoutString = "${time:2006-01-02 15:04:05.000} ${file} ${function} ${linenum} > [${level}] [${id}] ${message}"
 	}
 	var lay *Layout
 	var e error
