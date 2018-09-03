@@ -20,6 +20,6 @@ func TestDebug(t *testing.T) {
 	}
 	for _, test := range testCases {
 		log,_:=NewLog("${time:2006-01-02 15:04:05.000} ${file} ${function} ${linenum} > [${level}] [${id}] ${message}",LEVEL_DEBUG)
-		log.Panic(test.format,test.content)
+		log.Info(test.format,test.content)
 	}
 }

@@ -124,7 +124,7 @@ func ensureColor(level Level) color.Color {
 	case LEVEL_DEBUG:
 		return color.FgGreen
 	case LEVEL_INFO:
-		return color.FgBlack
+		return color.FgWhite
 	case LEVEL_WARN:
 		return color.FgYellow
 	case LEVEL_ERROR:
