@@ -5,7 +5,7 @@ import (
 	"strings"
 	"gopkg.in/gookit/color.v1"
 	"github.com/pkg/errors"
-	"go-util"
+	"github.com/godaner/go-util"
 	"time"
 	"runtime"
 	"fmt"

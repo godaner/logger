@@ -2,6 +2,22 @@
 
 
 [[projects]]
+  branch = "master"
+  digest = "1:ca1bfe03324601a4bd42482a331449c5f387ac014376b55515910ec3295ea15c"
+  name = "github.com/bwmarrin/snowflake"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "68117e6bbede4dd72d70c7a58d73348ead068509"
+
+[[projects]]
+  branch = "master"
+  digest = "1:96e768c322d5651cd716415c2b1daf87bf8ad8e5e4f316d80f0380bf1fd4fa24"
+  name = "github.com/godaner/go-util"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4e0f0eca97c317869c599ba597614ea7928ff233"
+
+[[projects]]
   digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
   name = "github.com/pkg/errors"
   packages = ["."]
@@ -21,6 +37,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/godaner/go-util",
     "github.com/pkg/errors",
     "gopkg.in/gookit/color.v1",
   ]
