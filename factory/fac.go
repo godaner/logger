@@ -7,6 +7,7 @@ import (
 	"sync"
 )
 
+var LoggerFactory Factory
 var levs = map[string]logger.Level{
 	"CRIT": logger.CRITICAL,
 	"ERRO": logger.ERROR,
@@ -15,41 +16,64 @@ var levs = map[string]logger.Level{
 	"INFO": logger.INFO,
 	"DEBU": logger.DEBUG,
 }
-
-type Factory struct {
-	Project string
-	LogPath string
-	Lev     *logger.Level
-	sync.Once
-}
-
-func (f *Factory) init() {
-	f.Do(func() {
-		if f.Lev == nil {
-			f.Lev = getEnvLev()
+// InitLoggerFactory
+func InitLoggerFactory(project string, options ...logger.Option) {
+	// options
+	opts := &logger.Options{}
+	for _, v := range options {
+		if v == nil {
+			continue
 		}
-		if f.LogPath == "" {
-			f.LogPath = getEnvLogPath()
-		}
-	})
-}
-func (f *Factory) GetLogger(tag string) (logger logger.Logger) {
-	return &logging.Logger{
-		L:       *f.Lev,
-		Project: f.Project,
-		Tag:     tag,
-		LogPath: f.LogPath,
+		v(opts)
+	}
+	LoggerFactory = &defFactory{
+		project: project,
+		logPath: opts.LogPath,
+		lev:     opts.Level,
 	}
 }
 
-func (f *Factory) GetProject() (pj string) {
-	return f.Project
+type Factory interface {
+	GetLogger(tag string) (logger logger.Logger)
+	GetProject() (pj string)
+	GetLogPath() (logPath string)
+	GetLevel() (level *logger.Level)
 }
-func (f *Factory) GetLogPath() (logPath string) {
-	return f.LogPath
+
+type defFactory struct {
+	project string
+	logPath string
+	lev     *logger.Level
+	sync.Once
 }
-func (f *Factory) GetLevel() (level *logger.Level) {
-	return f.Lev
+
+func (f *defFactory) init() {
+	f.Do(func() {
+		if f.lev == nil {
+			f.lev = getEnvLev()
+		}
+		if f.logPath == "" {
+			f.logPath = getEnvLogPath()
+		}
+	})
+}
+func (f *defFactory) GetLogger(tag string) (logger logger.Logger) {
+	return &logging.Logger{
+		L:       *f.lev,
+		Project: f.project,
+		Tag:     tag,
+		LogPath: f.logPath,
+	}
+}
+
+func (f *defFactory) GetProject() (pj string) {
+	return f.project
+}
+func (f *defFactory) GetLogPath() (logPath string) {
+	return f.logPath
+}
+func (f *defFactory) GetLevel() (level *logger.Level) {
+	return f.lev
 }
 
 // getEnvLogPath
