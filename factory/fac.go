@@ -17,9 +17,9 @@ var levs = map[string]logger.Level{
 	"DEBU": logger.DEBUG,
 }
 // InitLoggerFactory
-func InitLoggerFactory(project string, options ...logger.Option) {
+func InitLoggerFactory(project string, options ...Option) {
 	// options
-	opts := &logger.Options{}
+	opts := &Options{}
 	for _, v := range options {
 		if v == nil {
 			continue
