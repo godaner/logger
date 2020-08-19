@@ -7,7 +7,7 @@ import (
 	"sync"
 )
 
-var LoggerFactory Factory
+var loggerFactory Factory
 var levs = map[string]logger.Level{
 	"CRIT": logger.CRITICAL,
 	"ERRO": logger.ERROR,
@@ -16,8 +16,9 @@ var levs = map[string]logger.Level{
 	"INFO": logger.INFO,
 	"DEBU": logger.DEBUG,
 }
-// InitLoggerFactory
-func InitLoggerFactory(project string, options ...Option) {
+
+// Init
+func Init(project string, options ...Option) {
 	// options
 	opts := &Options{}
 	for _, v := range options {
@@ -26,11 +27,19 @@ func InitLoggerFactory(project string, options ...Option) {
 		}
 		v(opts)
 	}
-	LoggerFactory = &defFactory{
+	loggerFactory = &defFactory{
 		project: project,
 		logPath: opts.LogPath,
 		lev:     opts.Level,
 	}
+}
+
+// GetLogger
+func GetLogger(tag string) (logger logger.Logger) {
+	if loggerFactory == nil {
+		panic("pls init first")
+	}
+	return loggerFactory.GetLogger(tag)
 }
 
 type Factory interface {

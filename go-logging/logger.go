@@ -56,48 +56,60 @@ func (l *Logger) init() {
 }
 
 func (l *Logger) Noticef(fms string, arg ...interface{}) {
+	l.init()
 	l.log.Noticef(fms, arg...)
 }
 
 func (l *Logger) Notice(arg ...interface{}) {
+	l.init()
 	l.log.Notice(arg...)
 }
 
 func (l *Logger) Criticalf(fms string, arg ...interface{}) {
+	l.init()
 	l.log.Criticalf(fms, arg...)
 }
 
 func (l *Logger) Critical(arg ...interface{}) {
+	l.init()
 	l.log.Critical(arg...)
 }
 
 func (l *Logger) Debugf(fms string, arg ...interface{}) {
+	l.init()
 	l.log.Debugf(fms, arg...)
 }
 func (l *Logger) Debug(arg ...interface{}) {
+	l.init()
 	l.log.Debug(arg...)
 }
 
 func (l *Logger) Infof(fms string, arg ...interface{}) {
+	l.init()
 	l.log.Infof(fms, arg...)
 }
 
 func (l *Logger) Info(arg ...interface{}) {
+	l.init()
 	l.log.Info(arg...)
 }
 
 func (l *Logger) Warningf(fms string, arg ...interface{}) {
+	l.init()
 	l.log.Warningf(fms, arg...)
 }
 
 func (l *Logger) Warning(arg ...interface{}) {
+	l.init()
 	l.log.Warning(arg...)
 }
 
 func (l *Logger) Errorf(fms string, arg ...interface{}) {
+	l.init()
 	l.log.Errorf(fms, arg...)
 }
 
 func (l *Logger) Error(arg ...interface{}) {
+	l.init()
 	l.log.Error(arg...)
 }
