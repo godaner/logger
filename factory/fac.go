@@ -67,6 +67,7 @@ func (f *defFactory) init() {
 	})
 }
 func (f *defFactory) GetLogger(tag string) (logger logger.Logger) {
+	f.init()
 	return &logging.Logger{
 		L:       *f.lev,
 		Project: f.project,
@@ -76,12 +77,15 @@ func (f *defFactory) GetLogger(tag string) (logger logger.Logger) {
 }
 
 func (f *defFactory) GetProject() (pj string) {
+	f.init()
 	return f.project
 }
 func (f *defFactory) GetLogPath() (logPath string) {
+	f.init()
 	return f.logPath
 }
 func (f *defFactory) GetLevel() (level *logger.Level) {
+	f.init()
 	return f.lev
 }
 
